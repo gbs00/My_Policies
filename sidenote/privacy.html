@@ -1,160 +1,776 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Side Note - 隐私政策</title>
+    <title>隐私政策 - Side Note</title>
     <style>
-        * {
+        /* CSS Variables - Design System */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #fafafa;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #a1a1a6;
+            --accent: #5a9fd4;
+            --accent-hover: #4a8fc4;
+            --accent-bg: rgba(90, 159, 212, 0.1);
+            --success: #34c759;
+            --success-bg: rgba(52, 199, 89, 0.1);
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #000000;
+                --bg-secondary: #1c1c1e;
+                --bg-tertiary: #2c2c2e;
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --text-tertiary: #6e6e73;
+                --accent-bg: rgba(90, 159, 212, 0.15);
+                --success-bg: rgba(52, 199, 89, 0.15);
+                --border: rgba(255, 255, 255, 0.08);
+                --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            color: #333;
-            background: #f9f9f9;
-            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: var(--transition);
+        }
+
+        /* Layout */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .header {
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .back-link svg {
+            transition: var(--transition);
+        }
+
+        .back-link:hover svg {
+            transform: translateX(-4px);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 60px 24px;
         }
 
         .container {
             max-width: 720px;
             margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #1a1a1a;
+        /* Hero Section */
+        .hero {
+            margin-bottom: 60px;
+            padding: 20px 0;
         }
 
-        .subtitle {
-            color: #666;
-            margin-bottom: 32px;
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
             font-size: 14px;
+            color: var(--text-tertiary);
         }
 
-        h2 {
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--success-bg);
+            color: var(--success);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
             font-size: 18px;
-            margin: 24px 0 12px;
-            color: #1a1a1a;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
-        p,
-        ul {
+        /* Highlight Box */
+        .highlight {
+            background: var(--accent-bg);
+            border-left: 4px solid var(--accent);
+            padding: 24px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 32px 0;
+        }
+
+        .highlight-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            margin-bottom: 60px;
+        }
+
+        .toc-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-tertiary);
             margin-bottom: 16px;
         }
 
-        ul {
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 4px;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .toc-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .toc-link.active {
+            background: var(--accent-bg);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Content Sections */
+        .content {
+            scroll-margin-top: 100px;
+        }
+
+        .section {
+            margin-bottom: 64px;
+            scroll-margin-top: 100px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .section-content {
+            padding-left: 44px;
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .section-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Lists */
+        .bullet-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .bullet-list li {
+            position: relative;
             padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
-        li {
-            margin-bottom: 8px;
+        .bullet-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
         }
 
-        .highlight {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 16px;
-            border-radius: 4px;
+        .bullet-list li strong {
+            color: var(--text-primary);
+        }
+
+        /* Permission Cards */
+        .permission-grid {
+            display: grid;
+            gap: 16px;
             margin: 24px 0;
         }
 
-        .contact {
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid #eee;
+        .permission-card {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
         }
 
-        a {
-            color: #5a9fd4;
+        .permission-card:hover {
+            transform: translateX(4px);
+            background: var(--bg-tertiary);
         }
 
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: #1a1a1a;
-                color: #e0e0e0;
+        .permission-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .permission-content {
+            flex: 1;
+        }
+
+        .permission-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .permission-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin-top: 80px;
+            padding: 40px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .contact-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .contact-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .contact-link:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .main {
+                padding: 40px 20px;
             }
 
-            .container {
-                background: #2d2d2d;
+            .hero {
+                margin-bottom: 40px;
             }
 
-            h1,
-            h2 {
-                color: #fff;
+            .hero-title {
+                font-size: 28px;
             }
 
-            .subtitle {
-                color: #aaa;
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .toc {
+                padding: 20px;
+                margin-bottom: 40px;
+            }
+
+            .section {
+                margin-bottom: 48px;
+            }
+
+            .section-header {
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .section-content {
+                padding-left: 0;
+            }
+
+            .section-number {
+                display: none;
             }
 
             .highlight {
-                background: #1e3a1e;
-                border-color: #4caf50;
+                padding: 20px;
             }
 
-            .contact {
-                border-color: #444;
+            .permission-grid {
+                gap: 12px;
+            }
+
+            .permission-card {
+                padding: 16px;
+            }
+
+            .contact-section {
+                padding: 32px 24px;
+                margin-top: 60px;
             }
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .toc {
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.3s; }
+        .section:nth-child(3) { animation-delay: 0.4s; }
+        .section:nth-child(4) { animation-delay: 0.5s; }
+        .section:nth-child(5) { animation-delay: 0.6s; }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Side Note 隐私政策</h1>
-        <p class="subtitle">最后更新：2026年1月26日</p>
+    <div class="page">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <div class="logo-icon">📝</div>
+                    <span>Side Note</span>
+                </a>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    返回政策中心
+                </a>
+            </div>
+        </header>
 
-        <div class="highlight">
-            <strong>📌 核心承诺：</strong>Side Note 不收集、不存储、不传输任何用户数据至外部服务器。
-        </div>
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-meta">
+                        <span class="hero-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            已生效
+                        </span>
+                        <span>最后更新：2026年1月26日</span>
+                    </div>
+                    <h1 class="hero-title">隐私政策</h1>
+                    <p class="hero-subtitle">Side Note 是一款完全离线运行的浏览器插件，不收集、不存储、不传输任何用户数据至外部服务器。</p>
+                </section>
 
-        <h2>1. 数据收集</h2>
-        <p>Side Note 是一款完全离线运行的浏览器插件，<strong>不收集任何个人信息</strong>，包括但不限于：</p>
-        <ul>
-            <li>姓名、邮箱、电话等身份信息</li>
-            <li>浏览历史或网页内容</li>
-            <li>IP 地址或设备信息</li>
-            <li>使用行为统计数据</li>
-        </ul>
+                <!-- Core Promise -->
+                <div class="highlight">
+                    <div class="highlight-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        核心承诺
+                    </div>
+                    <p class="highlight-text">Side Note 不收集、不存储、不传输任何用户数据至外部服务器。所有数据仅保存在您的本地设备上。</p>
+                </div>
 
-        <h2>2. 本地存储</h2>
-        <p>Side Note 使用浏览器的本地存储功能（<code>chrome.storage.session</code>）临时保存您的笔记内容。这些数据：</p>
-        <ul>
-            <li>仅存储在您的设备本地</li>
-            <li>不会同步到任何云端服务</li>
-            <li>关闭标签页或浏览器后自动清除</li>
-        </ul>
+                <!-- Table of Contents -->
+                <nav class="toc">
+                    <div class="toc-title">目录</div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#collection" class="toc-link">1. 数据收集</a></li>
+                        <li class="toc-item"><a href="#storage" class="toc-link">2. 本地存储</a></li>
+                        <li class="toc-item"><a href="#permissions" class="toc-link">3. 权限说明</a></li>
+                        <li class="toc-item"><a href="#third-party" class="toc-link">4. 第三方服务</a></li>
+                        <li class="toc-item"><a href="#updates" class="toc-link">5. 政策更新</a></li>
+                    </ul>
+                </nav>
 
-        <h2>3. 权限说明</h2>
-        <p>Side Note 请求的权限及用途：</p>
-        <ul>
-            <li><strong>sidePanel</strong>：在浏览器侧边栏显示笔记界面</li>
-            <li><strong>storage</strong>：临时存储笔记内容（仅本地）</li>
-            <li><strong>activeTab</strong>：获取当前标签页的 URL 和标题</li>
-        </ul>
+                <!-- Content -->
+                <div class="content">
+                    <!-- Section 1 -->
+                    <section id="collection" class="section">
+                        <div class="section-header">
+                            <span class="section-number">1</span>
+                            <h2 class="section-title">数据收集</h2>
+                        </div>
+                        <div class="section-content">
+                            <p class="section-text">Side Note 是一款完全离线运行的浏览器插件，<strong>不收集任何个人信息</strong>，包括但不限于：</p>
+                            <ul class="bullet-list">
+                                <li>姓名、邮箱、电话等身份信息</li>
+                                <li>浏览历史或网页内容</li>
+                                <li>IP 地址或设备信息</li>
+                                <li>使用行为统计数据</li>
+                            </ul>
+                        </div>
+                    </section>
 
-        <h2>4. 第三方服务</h2>
-        <p>Side Note 不集成任何第三方分析、广告或追踪服务。</p>
+                    <!-- Section 2 -->
+                    <section id="storage" class="section">
+                        <div class="section-header">
+                            <span class="section-number">2</span>
+                            <h2 class="section-title">本地存储</h2>
+                        </div>
+                        <div class="section-content">
+                            <p class="section-text">Side Note 使用浏览器的本地存储功能（<code>chrome.storage.session</code>）临时保存您的笔记内容。这些数据：</p>
+                            <ul class="bullet-list">
+                                <li><strong>仅存储在您的设备本地</strong>，不会上传至任何服务器</li>
+                                <li><strong>不会同步到任何云端服务</strong>，包括 Google 账户</li>
+                                <li><strong>关闭标签页或浏览器后自动清除</strong>，不保留任何痕迹</li>
+                            </ul>
+                        </div>
+                    </section>
 
-        <h2>5. 政策更新</h2>
-        <p>如本政策有重大变更，我们将在此页面更新内容并修改"最后更新"日期。</p>
+                    <!-- Section 3 -->
+                    <section id="permissions" class="section">
+                        <div class="section-header">
+                            <span class="section-number">3</span>
+                            <h2 class="section-title">权限说明</h2>
+                        </div>
+                        <div class="section-content">
+                            <p class="section-text">Side Note 请求的权限及用途：</p>
+                            <div class="permission-grid">
+                                <div class="permission-card">
+                                    <div class="permission-icon">📑</div>
+                                    <div class="permission-content">
+                                        <div class="permission-name">sidePanel</div>
+                                        <div class="permission-desc">在浏览器侧边栏显示笔记界面，提供便捷的笔记体验</div>
+                                    </div>
+                                </div>
+                                <div class="permission-card">
+                                    <div class="permission-icon">💾</div>
+                                    <div class="permission-content">
+                                        <div class="permission-name">storage</div>
+                                        <div class="permission-desc">临时存储笔记内容，仅保存在本地，不联网</div>
+                                    </div>
+                                </div>
+                                <div class="permission-card">
+                                    <div class="permission-icon">📄</div>
+                                    <div class="permission-content">
+                                        <div class="permission-name">activeTab</div>
+                                        <div class="permission-desc">获取当前标签页的 URL 和标题，可选关联笔记与网页</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-        <div class="contact">
-            <h2>联系方式</h2>
-            <p>如有隐私相关问题，请通过以下方式联系：</p>
-            <p>📧 Email: <a href="mailto:gbs00@example.com">guobaoshen00@163.com</a></p>
-        </div>
+                    <!-- Section 4 -->
+                    <section id="third-party" class="section">
+                        <div class="section-header">
+                            <span class="section-number">4</span>
+                            <h2 class="section-title">第三方服务</h2>
+                        </div>
+                        <div class="section-content">
+                            <p class="section-text">Side Note 不集成任何第三方分析、广告或追踪服务。我们不会在后台进行任何网络请求。</p>
+                        </div>
+                    </section>
+
+                    <!-- Section 5 -->
+                    <section id="updates" class="section">
+                        <div class="section-header">
+                            <span class="section-number">5</span>
+                            <h2 class="section-title">政策更新</h2>
+                        </div>
+                        <div class="section-content">
+                            <p class="section-text">如本政策有重大变更，我们将在此页面更新内容并修改"最后更新"日期。建议您定期查看此页面以了解最新信息。</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Contact Section -->
+                <section class="contact-section">
+                    <div class="contact-icon">✉️</div>
+                    <h2 class="contact-title">联系方式</h2>
+                    <p class="contact-text">如有隐私相关问题，欢迎通过邮件联系我们</p>
+                    <a href="mailto:guobaoshen00@163.com" class="contact-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        发送邮件
+                    </a>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">© 2026 Side Note. 保留所有权利。</p>
+            </div>
+        </footer>
     </div>
-</body>
 
+    <script>
+        // Table of Contents Active State
+        const sections = document.querySelectorAll('.section');
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    tocLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
 </html>
